@@ -27,9 +27,11 @@ formulario.addEventListener('submit', (evento) =>{
     if(existe){
         itemAtual.id = existe.id
         atualizaElemento(itemAtual)
-        itens[itemAtual.id]= itemAtual
+        itens[itens.findIndex( elemento => elemento.id === existe.id)] = itemAtual
     } else {
-        itemAtual.id = itens.length
+        //itens.length -1 = ultimo elemento.
+        itemAtual.id = itens[itens.length -1] ? (itens[itens.length -1]).id + 1 : 0
+        //console.log((itens[itens.length -1]).id + 1)
         criaElemento(itemAtual)
         //array criado e adicionando o objeto acima, para salvar diversos itens no localStorage.
         itens.push(itemAtual)
@@ -54,7 +56,11 @@ function criaElemento(item) {
     novoItem.appendChild(qtdItem) 
     //acrescentando o nome dentro do elemento incrementado
     novoItem.innerHTML += item.nome
+
+    novoItem.appendChild(criaBotaoDeleta(item.id))
+
     lista.appendChild(novoItem)
+
 }
 
 function atualizaElemento(item) {
@@ -63,3 +69,20 @@ function atualizaElemento(item) {
     document.querySelector("[data-id='" + item.id + "']").innerHTML = item.qtd
 }
 
+function criaBotaoDeleta(id) {
+    const botaoDelete = document.createElement('button')
+    botaoDelete.innerText = 'X'
+
+    botaoDelete.addEventListener('click', function(){
+        deletaElemento(this.parentNode, id)
+    })
+
+    return botaoDelete
+}
+
+function deletaElemento(elemento, id) {
+    elemento.remove()
+
+    itens.splice(itens.findIndex( elemento => elemento.id === id), 1)
+    localStorage.setItem('itens',JSON.stringify(itens))
+}
