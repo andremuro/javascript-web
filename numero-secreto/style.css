@@ -53,3 +53,11 @@ h3 {
 .acertou {
     font-size: 3em ;
 }
+
+.btn-jogar {
+    padding: 10px 20px;
+    border: 0;
+    background-color: var(--primary-color);
+    border-radius: 8px;
+    margin-top: 30px;
+}
