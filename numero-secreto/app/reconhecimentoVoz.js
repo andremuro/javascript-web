@@ -7,8 +7,6 @@ recognition.lang = 'pt-Br'
 recognition.start();
 recognition.addEventListener('result', onSpek)
 
-recognition.addEventListener('end', () => recognition.start())
-
 function onSpek(evento){
     chute = evento.results[0][0].transcript
     exibeChuteTela(chute)
@@ -16,8 +14,10 @@ function onSpek(evento){
 }
 
 function exibeChuteTela(chute) {
-    elementoChute.innerHTML += `
+    elementoChute.innerHTML = `
         <div>Você disse</div>
         <span class="box">${chute}</span>
     `
 }
+
+recognition.addEventListener('end', () => recognition.start())
