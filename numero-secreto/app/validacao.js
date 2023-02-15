@@ -1,30 +1,27 @@
 function verificaValorValido(valor) {
-    const numero = parseInt(valor)
+    const numero = +valor
 
     if (chuteInvalido(numero)) {
-        //elementoChute.innerHTML += '<div>Valor Inválido</div>'
-        const divChuteInvalido = document.createElement('div')
-        divChuteInvalido.classList.add('chute-invalido')
-        divChuteInvalido.innerText = 'Valor Inválido'
-        elementoChute.appendChild(divChuteInvalido)
+        elementoChute.innerHTML += '<div class="chute-invalido">Valor Inválido</div>'
+        return
     }
 
-    if(valorMaiorMenorPermitido(valor)) {
-        const divChuteMMInvalido = document.createElement('div')
-        divChuteMMInvalido.classList.add('chute-invalido')
-        divChuteMMInvalido.innerText = `Valor Inválido, o número secreto precisa estar entre ${menorValor} e ${maiorValor}`
-        elementoChute.appendChild(divChuteMMInvalido)
+    if(valorMaiorMenorPermitido(numero)) {
+        elementoChute.innerHTML += `<div class="chute-invalido">Valor Inválido, o número secreto precisa estar entre ${menorValor} e ${maiorValor}</div>`
+        return
     }
 
-    if (valor == numeroSecreto){
-        document.body.innerHTML = ''
-        const telaSucesso = document.body
-        const acertou = document.createElement('div')
-        acertou.classList.add('acertou')
-        acertou.innerText = `Acertou Miseravi! O numero Secreto era ${numeroSecreto}`
-        
-        telaSucesso.appendChild(acertou)
-    }
+    if (numero == numeroSecreto){
+        document.body.innerHTML = `<div class="acertou">Acertou Miseravi! O numero Secreto era ${numeroSecreto}</div>`
+    } else if (numero > numeroSecreto) {
+        elementoChute.innerHTML += `
+        <div> O número secreto é menor <i class="fa-solid fa-down-long"></i></div>
+        `
+    } else {
+        elementoChute.innerHTML += `
+        <div> O número secreto é maior <i class="fa-solid fa-up-long"></i></div>
+        `
+    }    
 }
 
 function chuteInvalido(numero) {

@@ -7,20 +7,17 @@ recognition.lang = 'pt-Br'
 recognition.start();
 recognition.addEventListener('result', onSpek)
 
+recognition.addEventListener('end', () => recognition.start())
+
 function onSpek(evento){
     chute = evento.results[0][0].transcript
-    verificaValorValido(chute)
-    console.log(chute)
     exibeChuteTela(chute)
+    verificaValorValido(chute)
 }
 
 function exibeChuteTela(chute) {
-    const voceDisse = document.createElement('div')
-    const box = document.createElement('span')
-
-    voceDisse.innerText = 'Você Disse'
-    box.classList.add('box')
-    box.innerHTML = chute
-    elementoChute.appendChild(voceDisse)
-    elementoChute.appendChild(box)
+    elementoChute.innerHTML += `
+        <div>Você disse</div>
+        <span class="box">${chute}</span>
+    `
 }
